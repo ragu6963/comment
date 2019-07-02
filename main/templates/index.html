@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{%for p in posts%}
+<div class="card mb-3 shadow" style="width: 100%;">
+    <div class="card-body">
+        <h4 class="card-title">{{p.title}}</h4>
+        <p class="card-text">{{p.content|truncatewords:50}}</p>
+        <span style="font-size:0.8em;">{{p.user}} {{p.updated_at|date:"Y년m월d일"}} </span>
+        <a href="{%url 'read' p.id%}" class="stretched-link"></a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

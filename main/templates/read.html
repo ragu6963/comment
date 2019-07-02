@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- 글내용 창 -->
+<div class="mb-5">
+    <h3 class="card-text">{{post.title}}</h3>
+    <span>{{post.content|linebreaksbr}}</span>
+</div>
+<!-- 댓글쓰기 창 -->
+{% if user.is_authenticated %}
+<form action="" method="POST">
+    {%csrf_token%}
+    <div class="input-group mt-5 mb-5">
+        <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" name="anonymous">
+                <span style="font-size: 0.7em;">익명</span>
+            </div>
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-danger"><i class="fas fa-pencil-alt"></i></button>
+        </div>
+    </div>
+</form>
+{% endif %}
+
+<!-- 아래 이후 댓글 -->
+<div></div>
+
+<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'index'%}">글 목록</a></button>
+{%if request.user == post.user or request.user.is_staff %}
+<!-- 글쓴이와 로그인한 유저가 같을 때 보이는 화면 -->
+<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'update' post.id%}">수정하기</a></button>
+<button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'delete' post.id%}">삭제하기</a></button>
+{%endif%}
+{% endblock %}
