@@ -27,4 +27,6 @@ urlpatterns = [
     path('login/',accounts.views.login,name='login'),
     path('signup/',accounts.views.signup,name='signup'),
     path('logout/',accounts.views.logout,name='logout'),
+
+    path('c_create/<int:post_id>',main.views.c_create,name="c_create"),
 ]
