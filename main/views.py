@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect 
-from .models import Post,Comment
+from .models import Post
 
 def index(request):
     posts = Post.objects.all().order_by('-updated_at')
@@ -26,7 +26,7 @@ def create(request):
         post.content = request.POST['content']  
         post.save() 
         return redirect(index)  
-        
+
 def update(request,post_id):
     if request.method == "GET":
         post = Post.objects.get(id=post_id)
