@@ -13,7 +13,7 @@
         <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" name="anonymous">
+                <input type="checkbox" name="anonymous" value="y">
                 <span style="font-size: 0.7em;">익명</span>
             </div>
         </div>
@@ -24,8 +24,10 @@
 </form>
 {% endif %}
 
-<!-- 아래 이후 댓글 -->
-<div></div>
+<!-- 아래 이후 댓글 보여주기-->
+<div>
+     
+</div>
 
 <button class="btn btn-outline-danger"><a style="color:red;" href="{%url 'index'%}">글 목록</a></button>
 {%if request.user == post.user or request.user.is_staff %}

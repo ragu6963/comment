@@ -2,16 +2,16 @@ from django.shortcuts import render, redirect
 from .models import Post,Comment
 
 def index(request):
-    posts = Post.objects.all() 
+    posts = Post.objects.all().order_by('-updated_at')
     context= {
         "posts":posts
     } 
     return render(request,'index.html',context)
     
 def read(request,post_id):
-    post = Post.objects.get(id=post_id)
+    post = Post.objects.get(id=post_id) # get은 조건에 맞는 1개
     context = {
-        "post":post
+        "post":post,
     }
     return render(request,'read.html',context)
 
@@ -25,21 +25,8 @@ def create(request):
         post.title = request.POST['title']
         post.content = request.POST['content']  
         post.save() 
-        return redirect(index) 
-
-def c_create(request,post_id):
-    if request.method == "POST":
-        comment = Comment()
-        comment.user = request.user #request.user 는 현재 접속한 유저의 정보
-        comment.post = Post.objects.get(id = post_id) # post_id 는 댓글을 단 post의 id(인증키)
-        comment.content = request.POST['comment'] # comment는 text 창의 name
-        anonymous = request.POST.get('anonymous',False)  
-        if anonymous == "y":
-            comment.anonymous = True
-        comment.save()
-        return redirect('index')
-
-
+        return redirect(index)  
+        
 def update(request,post_id):
     if request.method == "GET":
         post = Post.objects.get(id=post_id)
